@@ -1,0 +1,7 @@
+const MAX_GAME_ROUNDS = 10;
+const MAX_GAME_SCORE = 10;
+
+export {
+  MAX_GAME_ROUNDS,
+  MAX_GAME_SCORE,
+}
