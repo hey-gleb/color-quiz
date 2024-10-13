@@ -1,17 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import './Button.css';
-
+import "./Button.css";
 
 interface Props extends React.HTMLProps<HTMLButtonElement> {
   className?: string;
-  type?: "submit" | "reset" | "button"
+  type?: "submit" | "reset" | "button";
 }
 
-const Button: React.FC<Props> = props => {
-  const {className, ...otherProps} = props;
+const Button: React.FC<Props> = (props) => {
+  const { className, ...otherProps } = props;
 
-  return <button className={`button ${className}`} {...otherProps}/>
-}
+  return <button className={`button ${className}`} {...otherProps} />;
+};
 
 export default Button;
