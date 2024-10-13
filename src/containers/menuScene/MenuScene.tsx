@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "../../atoms/button/Button";
 import Switch from "../../atoms/switch/Switch";
 
-import {GameRound, GameState} from "../sceneContainer/SceneContainer";
+import {ColorMode, GameRound, GameState} from "../sceneContainer/SceneContainer";
 
 import './MenuScene.css';
 
@@ -22,6 +22,33 @@ const MenuScene: React.FC<Props> = props => {
       <p className="instructions">
         Guess the correct color code from the options. Switch between Hex, RGB, HSV, and HSL to challenge yourself!
       </p>
+      Color mode
+      <Switch
+        onCheck={(value: string)=>{
+          updateGameState({
+            ...gameState,
+            colorMode: value as ColorMode,
+          })
+        }}
+        options={[
+          {
+            value: 'hex',
+            label: 'Hex',
+          },
+          {
+            value: 'rgb',
+            label: 'RGB',
+          },
+          {
+            value: 'hsv',
+            label: 'HSV',
+          },
+          {
+            value: 'hsl',
+            label: 'HSL',
+          }
+        ]}
+      />
       Game rounds
       <Switch onCheck={(value: string)=>{
         updateGameState({

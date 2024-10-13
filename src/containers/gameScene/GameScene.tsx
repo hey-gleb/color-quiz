@@ -3,9 +3,8 @@ import chroma from 'chroma-js';
 import cn from 'classnames';
 
 import Button from "../../atoms/button/Button";
-import Switch from "../../atoms/switch/Switch";
 
-import {MILLISECONDS_TO_WAIT_BEFORE_NEXT} from "../../const";
+import {INITIAL_GAME_STATE, MILLISECONDS_TO_WAIT_BEFORE_NEXT} from "../../const";
 
 import {ColorMode, GameState} from "../sceneContainer/SceneContainer";
 
@@ -72,34 +71,15 @@ const GameScene: React.FC<GameSceneProps> = props => {
 
   }, [colorToGuess, gameState, generateColorOptions, isAnswered, updateGameState]);
 
+  const handleBackButtonClick = useCallback(()=> updateGameState(INITIAL_GAME_STATE),[gameState, updateGameState])
+
   return (
-    <div id="background" className="colored-background" style={{background: colorToGuess}}>
-        <div className="quiz-form">
-          <Switch onCheck={(value: string)=>{
-            updateGameState({
-              ...gameState,
-              colorMode: value as ColorMode,
-            })
-          }}
-          options={[
-            {
-              value: 'hex',
-              label: 'Hex',
-            },
-            {
-              value: 'rgb',
-              label: 'RGB',
-            },
-            {
-              value: 'hsv',
-              label: 'HSV',
-            },
-            {
-              value: 'hsl',
-              label: 'HSL',
-            }
-          ]}
-          />
+    <div id="background" className="game-container" style={{background: colorToGuess}}>
+      <Button
+      className={'game-container__back-button'}
+      onClick={handleBackButtonClick}
+      >Back to menu</Button>
+      <div className={"quiz-form"}>
           {gameState.totalRounds === 'endless' ?
             <p>Game round {gameState.currentRound}</p>
             :

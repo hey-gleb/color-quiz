@@ -5,7 +5,7 @@ import GameOverScene from "../gameOverScene/GameOverScene";
 import MenuScene from "../menuScene/MenuScene";
 
 import './SceneContainer.css';
-import gameScene from "../gameScene/GameScene";
+import {INITIAL_GAME_STATE} from "../../const";
 
 type Scene = 'menu' | 'game' | 'gameOver';
 export type ColorMode = 'hex' | 'rgb' | 'hsv' | 'hsl';
@@ -20,17 +20,6 @@ export interface GameState {
   colorMode: ColorMode
 
   isGameOver: boolean;
-}
-
-const INITIAL_GAME_STATE: GameState = {
-  currentRound: 1,
-  currentScore: 0,
-  currentScene: 'menu',
-
-  totalRounds: 10,
-  colorMode: 'hex',
-
-  isGameOver: false,
 }
 
 const SceneContainer: React.FC = () => {
