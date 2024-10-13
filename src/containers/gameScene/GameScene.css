@@ -16,3 +16,12 @@
     flex-direction: column;
     gap: 20px;
 }
+
+.guess-option_correct, .guess-option_correct:hover, .guess-option_correct:active  {
+    background-color: #00c800;
+}
+
+.guess-option_incorrect, .guess-option_incorrect:hover, .guess-option_incorrect:active  {
+    background-color: #ff0000;
+}
+

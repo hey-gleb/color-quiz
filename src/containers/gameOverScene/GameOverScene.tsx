@@ -2,9 +2,7 @@ import React from 'react';
 
 import Button from "../../atoms/button/Button";
 
-import {MAX_GAME_SCORE} from "../../const";
-
-import {GameState} from "../../GameContainer";
+import {GameState} from "../sceneContainer/SceneContainer";
 
 import './GameOverScene.css';
 
@@ -22,7 +20,7 @@ const GameOverScene: React.FC<Props> = props => {
         <h3>
           Game finished successfully!
         </h3>
-      Your score: {gameState.currentScore}/{MAX_GAME_SCORE}!
+      Your score: {gameState.currentScore}/{gameState.totalRounds}!
       <Button onClick={onGameRestart}>Back to menu</Button>
     </div>
     </div>
