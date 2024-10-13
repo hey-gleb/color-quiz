@@ -1,24 +1,39 @@
 import React, {useCallback} from 'react';
+import chroma from 'chroma-js';
 
 import Button from "../../atoms/button/Button";
 
 import {MAX_GAME_ROUNDS} from "../../const";
 
-import {GameState} from "../../GameContainer";
+import {ColorMode, GameState} from "../../GameContainer";
 
 import './GameScene.css';
+import Switch from "../../atoms/switch/Switch";
 
 interface GameSceneProps {
   gameState: GameState;
   updateGameState: (gameState: GameState) => void;
 }
 
+
+const outputFormat: Record<ColorMode, (color: string) => string> = {
+  hex: (color: string) => chroma(color).hex().toUpperCase(),
+  rgb: (color: string) => `rgb(${chroma(color).rgb().join(', ')})`,
+  // TODO fix hsv
+  hsv: (color: string) => {
+    const [hue, saturation, value] = chroma(color).hsv();
+    return `hsv(${Math.trunc(hue)}, ${Math.trunc(saturation * 100)}%, ${Math.trunc(value * 100)}%)`;
+  },
+  hsl: (color: string) => {
+    const [hue, saturation, lightness] = chroma(color).hsl();
+    return `hsl(${Math.trunc(hue)}, ${Math.trunc(saturation * 100)}%, ${Math.trunc(lightness * 100)}%)`;
+  },
+}
+
 const GameScene: React.FC<GameSceneProps> = props => {
   const {gameState, updateGameState} = props;
 
-  const getRandomColorHex = () => {
-    return '#' + Math.floor(Math.random()*16777215).toString(16).toUpperCase();
-  }
+  const getRandomColorHex = () => chroma.random().hex()
 
   const generateColorOptions = useCallback((currentColor: string) => {
     const options = [currentColor];
@@ -52,9 +67,34 @@ const GameScene: React.FC<GameSceneProps> = props => {
   return (
     <div className="colored-background" style={{background: colorToGuess}}>
         <div className="quiz-form">
+          <Switch onCheck={(value: string)=>{
+            updateGameState({
+              ...gameState,
+              colorMode: value as ColorMode,
+            })
+          }}
+          options={[
+            {
+              value: 'hex',
+              label: 'Hex',
+            },
+            {
+              value: 'rgb',
+              label: 'RGB',
+            },
+            {
+              value: 'hsv',
+              label: 'HSV',
+            },
+            {
+              value: 'hsl',
+              label: 'HSL',
+            }
+          ]}
+          />
           <p>Game rounds {gameState.currentRound}/{MAX_GAME_ROUNDS}</p>
           {guessOptions.map((guessOption) => (
-            <Button key={guessOption} onClick={() => handleOptionClick(guessOption)}>{guessOption}</Button>
+            <Button key={guessOption} onClick={() => handleOptionClick(guessOption)}>{outputFormat[gameState.colorMode](guessOption)}</Button>
           ))}
         </div>
     </div>

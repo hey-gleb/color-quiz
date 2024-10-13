@@ -9,11 +9,13 @@ import './GameContainer.css';
 import MenuScene from "./containers/menuScene/MenuScene";
 
 type Scene = 'menu' | 'game' | 'gameOver';
+export type ColorMode = 'hex' | 'rgb' | 'hsv' | 'hsl';
 
 export interface GameState {
   currentRound: number;
   currentScore: number;
   currentScene: Scene;
+  colorMode: ColorMode
   isGameOver: boolean;
 }
 
@@ -21,6 +23,7 @@ const INITIAL_GAME_STATE: GameState = {
   currentRound: 1,
   currentScore: 0,
   currentScene: 'menu',
+  colorMode: 'hex',
   isGameOver: false,
 }
 

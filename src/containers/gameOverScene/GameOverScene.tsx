@@ -23,7 +23,7 @@ const GameOverScene: React.FC<Props> = props => {
           Game finished successfully!
         </h3>
       Your score: {gameState.currentScore}/{MAX_GAME_SCORE}!
-      <Button onClick={onGameRestart}>Restart</Button>
+      <Button onClick={onGameRestart}>Back to menu</Button>
     </div>
     </div>
   )
