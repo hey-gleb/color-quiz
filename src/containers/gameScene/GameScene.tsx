@@ -3,6 +3,8 @@ import chroma from "chroma-js";
 import cn from "classnames";
 
 import Button from "../../atoms/button/Button";
+import HintButton from "../../atoms/hintButton/HintButton";
+import ProgressBar from "../../atoms/progressBar/ProgressBar";
 
 import {
   INITIAL_GAME_STATE,
@@ -86,7 +88,7 @@ const GameScene: React.FC<GameSceneProps> = (props) => {
 
   const handleBackButtonClick = useCallback(
     () => updateGameState(INITIAL_GAME_STATE),
-    [gameState, updateGameState],
+    [updateGameState],
   );
 
   return (
@@ -101,32 +103,37 @@ const GameScene: React.FC<GameSceneProps> = (props) => {
       >
         Back to menu
       </Button>
+      <HintButton className={"game-container__hint-button"} />
       <div className={"quiz-form"}>
         {gameState.totalRounds === "endless" ? (
           <p>Game round {gameState.currentRound}</p>
         ) : (
-          <p>
-            Game rounds {gameState.currentRound}/{gameState.totalRounds}
-          </p>
+          <ProgressBar
+            className={"game-container__progress-bar"}
+            value={gameState.currentRound}
+            total={gameState.totalRounds}
+          />
         )}
-        {guessOptions.map((guessOption) => (
-          <Button
-            className={cn(
-              "guess-option",
-              {
-                "guess-option_correct":
-                  isAnswered && guessOption === colorToGuess,
-                "guess-option_incorrect":
-                  isAnswered && guessOption !== colorToGuess,
-              },
-              {},
-            )}
-            key={guessOption}
-            onClick={() => handleOptionClick(guessOption)}
-          >
-            {outputFormat[gameState.colorMode](guessOption)}
-          </Button>
-        ))}
+        <div className={"quiz-form__guess-buttons"}>
+          {guessOptions.map((guessOption) => (
+            <Button
+              className={cn(
+                "guess-option",
+                {
+                  "guess-option_correct":
+                    isAnswered && guessOption === colorToGuess,
+                  "guess-option_incorrect":
+                    isAnswered && guessOption !== colorToGuess,
+                },
+                {},
+              )}
+              key={guessOption}
+              onClick={() => handleOptionClick(guessOption)}
+            >
+              {outputFormat[gameState.colorMode](guessOption)}
+            </Button>
+          ))}
+        </div>
       </div>
     </div>
   );

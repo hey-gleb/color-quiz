@@ -1,0 +1,6 @@
+.hint-button {
+    width: 42px;
+    height: 42px;
+    background: #3498db url("./images/hint-button.svg") 50% 50% no-repeat;
+    background-size: 75%;
+}

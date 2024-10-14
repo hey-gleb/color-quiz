@@ -2,7 +2,7 @@ import React from "react";
 
 import "./Button.css";
 
-interface Props extends React.HTMLProps<HTMLButtonElement> {
+export interface Props extends React.HTMLProps<HTMLButtonElement> {
   className?: string;
   type?: "submit" | "reset" | "button";
 }
