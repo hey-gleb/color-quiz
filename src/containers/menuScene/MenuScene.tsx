@@ -26,10 +26,12 @@ const centerCol = Math.floor(cols / 2);
 const maxDistance = Math.sqrt(centerRow ** 2 + centerCol ** 2);
 
 const calculateShade = (distanceFromCenter: number, maxDistance: number) => {
-  const shadeFactor = (distanceFromCenter / maxDistance) * 100;
-  const lightness = 100 - shadeFactor;
+  const shadeFactor = distanceFromCenter / maxDistance;
+  const minLightness = 75;
+  const maxLightness = 100;
+  const lightness = maxLightness - shadeFactor * (maxLightness - minLightness);
   const hslRandom = chroma.random().hsl();
-  return chroma(`hsl(${hslRandom[0]}, 75%, ${lightness}%)`).hex().toUpperCase();
+  return chroma(`hsl(${hslRandom[0]}, 85%, ${lightness}%)`).hex().toUpperCase();
 };
 
 const MenuScene: React.FC<Props> = (props) => {
