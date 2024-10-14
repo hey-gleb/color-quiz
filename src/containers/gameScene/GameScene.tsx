@@ -20,7 +20,7 @@ interface GameSceneProps {
   updateGameState: (gameState: GameState) => void;
 }
 
-const outputFormat: Record<ColorMode, (color: string) => string> = {
+export const outputFormat: Record<ColorMode, (color: string) => string> = {
   hex: (color: string) => chroma(color).hex().toUpperCase(),
   rgb: (color: string) => `rgb(${chroma(color).rgb().join(", ")})`,
   // TODO fix hsv

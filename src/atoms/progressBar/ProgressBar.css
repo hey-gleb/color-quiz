@@ -4,6 +4,11 @@
 
     border-radius: 20px;
     background-color: #ddd;
+
+    display: flex;
+    gap: 2px;
+
+    overflow: hidden;
 }
 
 .progress-fill {
