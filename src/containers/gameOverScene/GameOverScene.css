@@ -18,3 +18,11 @@
 
   gap: 20px;
 }
+
+.correct-answers {
+  font-size: 5em;
+}
+
+.total-rounds {
+  font-size: 1em;
+}

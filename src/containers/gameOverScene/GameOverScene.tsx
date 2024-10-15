@@ -18,7 +18,11 @@ const GameOverScene: React.FC<Props> = (props) => {
     <div className="game-over-scene">
       <div className="game-over-scene__form">
         <h3>Game finished successfully!</h3>
-        Your score: {gameState.currentScore}/{gameState.totalRounds}!
+        <p>
+          <span className={"correct-answers"}>{gameState.currentScore}</span>/
+          <span className={"total-rounds"}>{gameState.totalRounds}</span>
+          Correct answers
+        </p>
         <Button onClick={onGameRestart}>Back to menu</Button>
       </div>
     </div>
