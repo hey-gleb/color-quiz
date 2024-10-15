@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import cn from "classnames";
 
 import "./Switch.css";
@@ -10,12 +10,13 @@ interface SwitchOptionDetails {
 
 interface Props {
   className?: string;
+  label?: string;
   options: SwitchOptionDetails[];
   onCheck: (value: string) => void;
 }
 
 const Switch: React.FC<Props> = (props) => {
-  const { className = "", onCheck, options } = props;
+  const { className = "", label, onCheck, options } = props;
 
   const [currentChecked, setCurrentChecked] = React.useState(
     options[0].value || "",
@@ -28,6 +29,7 @@ const Switch: React.FC<Props> = (props) => {
 
   return (
     <div className={cn("switch-container", { [className]: !!className })}>
+      {label ? <label className={"switch-label"}>{label}</label> : null}
       <div className="switch">
         <div className="switch-toggle"></div>
         {options.map(({ value, label }, index) => (

@@ -10,8 +10,9 @@ import {
   GameState,
 } from "../sceneContainer/SceneContainer";
 
-import "./MenuScene.css";
 import { outputFormat } from "../gameScene/GameScene";
+
+import "./MenuScene.css";
 
 interface Props {
   gameState: GameState;
@@ -59,19 +60,20 @@ const MenuScene: React.FC<Props> = (props) => {
       ([coordinates, color]) => {
         const [row, col] = coordinates.split(",");
         return (
-          <div
-            key={`${row}-${col}`}
-            className={"color-block"}
-            style={{ backgroundColor: color }}
-          >
+          <div key={`${row}-${col}`} className={"color-block"}>
             <div
-              className={"color-block__front"}
+              className={"color-block__inner"}
               style={{ backgroundColor: color }}
-            />
-            <div className="color-block__back">
-              <h3 className={"color-block__back-text"}>
-                {outputFormat[gameState.colorMode](color)}
-              </h3>
+            >
+              <div
+                className={"color-block__front"}
+                style={{ backgroundColor: color }}
+              />
+              <div className="color-block__back">
+                <h3 className={"color-block__back-text"}>
+                  {outputFormat[gameState.colorMode](color)}
+                </h3>
+              </div>
             </div>
           </div>
         );
@@ -83,13 +85,12 @@ const MenuScene: React.FC<Props> = (props) => {
     <div className={"menu-scene"}>
       <div className="grid-container">{colorPaletteGrid}</div>
       <div className={"menu-scene__form"}>
-        <h1>Color quiz</h1>
-        <p className="instructions">
-          Guess the correct color code from the options. Switch between Hex,
-          RGB, HSV, and HSL to challenge yourself!
+        <h1 className={"menu-scene__title"}>Color quiz</h1>
+        <p className="menu-scene__description">
+          Guess the correct color code from the options to challenge yourself
         </p>
-        Color mode
         <Switch
+          label={"Color mode"}
           onCheck={(value: string) => {
             updateGameState({
               ...gameState,
@@ -115,8 +116,8 @@ const MenuScene: React.FC<Props> = (props) => {
             },
           ]}
         />
-        Game rounds
         <Switch
+          label={"Game rounds"}
           onCheck={(value: string) => {
             updateGameState({
               ...gameState,
