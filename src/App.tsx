@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 
 import { Card, CardContent } from './components/ui/card';
 
-import './App.css';
-
 const TOTAL_ROUNDS = 5;
 const SOUND_ASSETS_FILE_PATH_BASE = '/assets/sounds';
 
@@ -176,34 +174,42 @@ function App() {
         Round: {round}/{TOTAL_ROUNDS}
       </div>
       <Card className="w-full max-w-md rounded-2xl shadow-xl border border-zinc-700 bg-zinc-800">
-        <CardContent className="p-6 flex flex-col items-center">
-          <div
-            className="w-40 h-40 rounded-xl mb-10 border border-zinc-700"
-            style={{ backgroundColor: question.answer }}
-          />
-          <div className="grid grid-cols-2 gap-4 w-full">
-            {question.options.map((hex) => {
-              const isSelected = selected === hex;
-              const isRight = showAnswer && hex === question.answer;
-              const isWrong =
-                showAnswer && isSelected && hex !== question.answer;
-              return (
-                <motion.button
-                  whileTap={{ scale: 0.95 }}
-                  key={hex}
-                  onClick={() => handleSelect(hex)}
-                  className={`py-3 px-4 rounded-xl font-mono text-sm text-white transition-all duration-300 border 
+        <motion.div
+          key={round}
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 1.1 }}
+          transition={{ duration: 0.4 }}
+        >
+          <CardContent className="p-6 flex flex-col items-center">
+            <div
+              className="w-40 h-40 rounded-xl mb-10 border border-zinc-700"
+              style={{ backgroundColor: question.answer }}
+            />
+            <div className="grid grid-cols-2 gap-4 w-full">
+              {question.options.map((hex) => {
+                const isSelected = selected === hex;
+                const isRight = showAnswer && hex === question.answer;
+                const isWrong =
+                  showAnswer && isSelected && hex !== question.answer;
+                return (
+                  <motion.button
+                    whileTap={{ scale: 0.95 }}
+                    key={hex}
+                    onClick={() => handleSelect(hex)}
+                    className={`py-3 px-4 rounded-xl font-mono text-sm text-white transition-all duration-300 border 
                     ${isRight ? 'bg-green-500 text-black border-green-500' : ''}
                     ${isWrong ? 'bg-red-500 text-black border-red-500' : ''}
                     ${!isRight && !isWrong ? 'bg-zinc-700 hover:bg-zinc-600 border-zinc-600' : ''}
                   `}
-                >
-                  {hex}
-                </motion.button>
-              );
-            })}
-          </div>
-        </CardContent>
+                  >
+                    {hex}
+                  </motion.button>
+                );
+              })}
+            </div>
+          </CardContent>
+        </motion.div>
       </Card>
     </div>
   );
