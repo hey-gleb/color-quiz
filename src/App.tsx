@@ -6,6 +6,7 @@ import { Card, CardContent } from './components/ui/card';
 import './App.css';
 
 const TOTAL_ROUNDS = 5;
+const SOUND_ASSETS_FILE_PATH_BASE = '/assets/sounds';
 
 const getRandomHexChar = () => {
   const letters = '0123456789ABCDEF';
@@ -113,6 +114,15 @@ function App() {
     if (hex === question.answer) {
       setScore((prev) => prev + 1);
     }
+
+    const audio = new Audio(
+      hex === question.answer
+        ? `${SOUND_ASSETS_FILE_PATH_BASE}/correct-answer.mp3`
+        : `${SOUND_ASSETS_FILE_PATH_BASE}/wrong-answer.mp3`
+    );
+    audio.play().catch((err) => {
+      console.error('Failed to play sound:', err);
+    });
 
     setTimeout(() => {
       setRound((prev) => prev + 1);
