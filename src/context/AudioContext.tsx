@@ -1,4 +1,10 @@
-import React, { createContext, useEffect, useRef } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { SOUND_ASSETS_FILE_PATH_BASE } from '@/const.ts';
 
@@ -9,6 +15,8 @@ type SoundMap = {
 
 type AudioContextType = {
   play: (sound: keyof SoundMap) => void;
+  toggleMute: () => void;
+  isMuted: boolean;
 };
 
 export const AudioContext = createContext<AudioContextType | undefined>(
@@ -16,6 +24,7 @@ export const AudioContext = createContext<AudioContextType | undefined>(
 );
 
 export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
+  const [isMuted, setIsMuted] = useState(false);
   const sounds = useRef<SoundMap>({
     correctAnswer: new Audio(
       `${SOUND_ASSETS_FILE_PATH_BASE}/correct-answer.mp3`
@@ -29,16 +38,25 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
     });
   });
 
-  const play = (sound: keyof SoundMap) => {
-    const audio = sounds.current[sound];
-    if (audio) {
-      audio.currentTime = 0;
-      audio.play().catch(console.error);
-    }
+  const play = useCallback(
+    (sound: keyof SoundMap) => {
+      const audio = sounds.current[sound];
+      if (audio && !isMuted) {
+        audio.currentTime = 0;
+        audio.play().catch(console.error);
+      }
+    },
+    [isMuted]
+  );
+
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
   };
 
   return (
-    <AudioContext.Provider value={{ play }}>{children}</AudioContext.Provider>
+    <AudioContext.Provider value={{ play, toggleMute, isMuted }}>
+      {children}
+    </AudioContext.Provider>
   );
 };
 
