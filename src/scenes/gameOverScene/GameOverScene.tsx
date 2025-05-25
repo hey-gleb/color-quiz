@@ -67,7 +67,9 @@ const GameOverScene: React.FC = () => {
         </div>
 
         <div className="mt-6 flex justify-center gap-4">
-          <Button onClick={handleRestart}>🔁 Try again</Button>
+          <Button variant={'secondary'} size={'lg'} onClick={handleRestart}>
+            🔁 Try again
+          </Button>
         </div>
       </motion.div>
     </div>

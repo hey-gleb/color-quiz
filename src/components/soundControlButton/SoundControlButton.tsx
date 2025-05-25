@@ -8,8 +8,8 @@ const SoundControlButton: React.FC<React.ButtonHTMLAttributes<any>> = (
   const { isMuted, toggleMute } = useAudio();
 
   const iconBackground = isMuted
-    ? '/assets/icons/sound-icon.svg'
-    : '/assets/icons/mute-icon.svg';
+    ? '/assets/icons/mute-icon.svg'
+    : '/assets/icons/sound-icon.svg';
 
   return (
     <Button
@@ -20,7 +20,7 @@ const SoundControlButton: React.FC<React.ButtonHTMLAttributes<any>> = (
     >
       <div
         className={'w-32 h-32'}
-        aria-label={isMuted ? 'Unmute' : 'Mute'}
+        aria-label={isMuted ? 'Mute' : 'Unmute'}
         style={{
           background: `url(${iconBackground}) no-repeat 50% 50%`,
         }}
