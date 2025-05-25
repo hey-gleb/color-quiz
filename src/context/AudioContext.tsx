@@ -11,6 +11,7 @@ import { SOUND_ASSETS_FILE_PATH_BASE } from '@/const.ts';
 type SoundMap = {
   correctAnswer: HTMLAudioElement;
   wrongAnswer: HTMLAudioElement;
+  gameOver: HTMLAudioElement;
 };
 
 type AudioContextType = {
@@ -30,6 +31,7 @@ export const AudioProvider = ({ children }: { children: React.ReactNode }) => {
       `${SOUND_ASSETS_FILE_PATH_BASE}/correct-answer.mp3`
     ),
     wrongAnswer: new Audio(`${SOUND_ASSETS_FILE_PATH_BASE}/wrong-answer.mp3`),
+    gameOver: new Audio(`${SOUND_ASSETS_FILE_PATH_BASE}/game-over.mp3`),
   });
 
   useEffect(() => {

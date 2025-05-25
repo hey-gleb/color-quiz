@@ -1,5 +1,6 @@
-import useGameState from '@/hooks/useGameState';
 import React from 'react';
+
+import useGameState from '@/hooks/useGameState';
 
 const MenuScene: React.FC = () => {
   const { gameState, resetGame } = useGameState();

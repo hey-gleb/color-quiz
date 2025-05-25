@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 import { Card, CardContent } from '@/components/ui/card.tsx';
@@ -11,14 +11,15 @@ const GameScene: React.FC = () => {
   const { play } = useAudio();
 
   const [selected, setSelected] = useState<string | null>(null);
-  const [showAnswer, setShowAnswer] = useState(false);
   const [question, setQuestion] = useState(generateQuestion(gameState.round));
+
+  const showAnswer = useRef(false);
 
   const handleSelect = useCallback(
     (hex: string) => {
-      if (showAnswer) return;
+      if (showAnswer.current) return;
       setSelected(hex);
-      setShowAnswer(true);
+      showAnswer.current = true;
 
       const currentGameState = { ...gameState };
 
@@ -27,12 +28,18 @@ const GameScene: React.FC = () => {
 
       setTimeout(() => {
         currentGameState.round += 1;
-        if (currentGameState.round === gameState.totalRounds) {
+        currentGameState.answers.push({
+          questionColor: question.answer,
+          selected: hex,
+          correct: question.answer,
+          isCorrect: hex === question.answer,
+        });
+        if (currentGameState.round > gameState.totalRounds) {
           currentGameState.scene = 'gameOver';
         }
-        setQuestion(generateQuestion(currentGameState.round + 1));
+        setQuestion(generateQuestion(currentGameState.round));
         setSelected(null);
-        setShowAnswer(false);
+        showAnswer.current = false;
         setGameState(currentGameState);
       }, 1500);
     },
@@ -60,9 +67,9 @@ const GameScene: React.FC = () => {
             <div className="grid grid-cols-2 gap-4 w-full">
               {question.options.map((hex) => {
                 const isSelected = selected === hex;
-                const isRight = showAnswer && hex === question.answer;
+                const isRight = showAnswer.current && hex === question.answer;
                 const isWrong =
-                  showAnswer && isSelected && hex !== question.answer;
+                  showAnswer.current && isSelected && hex !== question.answer;
                 return (
                   <motion.button
                     whileTap={{ scale: 0.95 }}
