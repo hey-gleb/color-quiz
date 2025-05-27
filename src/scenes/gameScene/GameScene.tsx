@@ -1,51 +1,59 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 import { Card, CardContent } from '@/components/ui/card.tsx';
-import { generateQuestion } from '@/colors.ts';
 import useGameState from '@/hooks/useGameState';
-import useAudio from '@/hooks/useAudio.ts';
+import QuizQuestion from '@/components/questions/QuizQuestion.tsx';
+import ColorMatchQuestion from '@/components/questions/ColorMatchQuestion.tsx';
+import type { GameState } from '@/context/GameStateContext';
+import type { GameRound, QuestionType } from '@/types/game.ts';
+import type { QuestionProps } from '@/components/questions';
+
+const gamePlan: GameRound[] = [
+  {
+    questionType: 'quiz',
+    difficulty: 1,
+  },
+  {
+    questionType: 'quiz',
+    difficulty: 2,
+  },
+  {
+    questionType: 'quiz',
+    difficulty: 3,
+  },
+  {
+    questionType: 'quiz',
+    difficulty: 4,
+  },
+  {
+    questionType: 'match',
+    difficulty: 5,
+  },
+];
+
+const questionTypeToComponentMap: Record<
+  QuestionType,
+  React.FC<QuestionProps>
+> = {
+  quiz: QuizQuestion,
+  match: ColorMatchQuestion,
+};
 
 const GameScene: React.FC = () => {
   const { gameState, setGameState } = useGameState();
-  const { play } = useAudio();
 
-  const [selected, setSelected] = useState<string | null>(null);
-  const [question, setQuestion] = useState(generateQuestion(gameState.round));
+  const handleAnswerSubmit = (currentGameState: GameState) => {
+    currentGameState.round += 1;
+    if (currentGameState.round > gamePlan.length) {
+      setGameState({ ...currentGameState, scene: 'gameOver' });
+    } else {
+      setGameState(currentGameState);
+    }
+  };
 
-  const showAnswer = useRef(false);
-
-  const handleSelect = useCallback(
-    (hex: string) => {
-      if (showAnswer.current) return;
-      setSelected(hex);
-      showAnswer.current = true;
-
-      const currentGameState = { ...gameState };
-
-      if (hex === question.answer) currentGameState.score += 1;
-      play(hex === question.answer ? 'correctAnswer' : 'wrongAnswer');
-
-      setTimeout(() => {
-        currentGameState.round += 1;
-        currentGameState.answers.push({
-          questionColor: question.answer,
-          selected: hex,
-          correct: question.answer,
-          isCorrect: hex === question.answer,
-        });
-        if (currentGameState.round > gameState.totalRounds) {
-          currentGameState.scene = 'gameOver';
-        }
-        setQuestion(generateQuestion(currentGameState.round));
-        setSelected(null);
-        showAnswer.current = false;
-        setGameState(currentGameState);
-      }, 1500);
-    },
-    [gameState]
-  );
-
+  const gameRound = gamePlan[gameState.round - 1];
+  const QuestionComponent = questionTypeToComponentMap[gameRound.questionType];
   return (
     <div className="min-h-screen bg-zinc-900 text-white flex items-center justify-center p-6">
       <div className="absolute top-4 right-6 text-white text-lg font-semibold">
@@ -59,33 +67,8 @@ const GameScene: React.FC = () => {
           exit={{ opacity: 0, scale: 1.1 }}
           transition={{ duration: 0.4 }}
         >
-          <CardContent className="p-6 flex flex-col items-center">
-            <div
-              className="w-40 h-40 rounded-xl mb-10 border border-zinc-700"
-              style={{ backgroundColor: question.answer }}
-            />
-            <div className="grid grid-cols-2 gap-4 w-full">
-              {question.options.map((hex) => {
-                const isSelected = selected === hex;
-                const isRight = showAnswer.current && hex === question.answer;
-                const isWrong =
-                  showAnswer.current && isSelected && hex !== question.answer;
-                return (
-                  <motion.button
-                    whileTap={{ scale: 0.95 }}
-                    key={hex}
-                    onClick={() => handleSelect(hex)}
-                    className={`py-3 px-4 rounded-xl font-mono text-sm text-white transition-all duration-300 border 
-                    ${isRight ? 'bg-green-500 text-black border-green-500' : ''}
-                    ${isWrong ? 'bg-red-500 text-black border-red-500' : ''}
-                    ${!isRight && !isWrong ? 'bg-zinc-700 hover:bg-zinc-600 border-zinc-600' : ''}
-                  `}
-                  >
-                    {hex}
-                  </motion.button>
-                );
-              })}
-            </div>
+          <CardContent className="p-6 flex flex-col items-center text-white gap-4">
+            <QuestionComponent onAnswerSubmit={handleAnswerSubmit} />
           </CardContent>
         </motion.div>
       </Card>

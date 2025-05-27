@@ -9,7 +9,7 @@ import useAudio from '@/hooks/useAudio.ts';
 const GameOverScene: React.FC = () => {
   const { gameState, resetGame } = useGameState();
   const { play } = useAudio();
-  const { score, answers, totalRounds } = gameState;
+  const { score, answers } = gameState;
 
   useEffect(() => {
     confetti({
@@ -34,9 +34,7 @@ const GameOverScene: React.FC = () => {
         className="w-full max-w-md p-6 bg-zinc-800 text-white rounded-2xl shadow-xl border border-zinc-700"
       >
         <h2 className="text-2xl font-bold mb-2 text-center">🎉 Great job!</h2>
-        <p className="text-center text-xl">
-          {score} / {totalRounds} points
-        </p>
+        <p className="text-center text-xl">{score} points</p>
 
         <div className="mt-6">
           {answers.map((a, i) => (
