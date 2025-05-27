@@ -4,6 +4,8 @@ import { hsvaToHex, ShadeSlider, Wheel } from '@uiw/react-color';
 import { Button } from '@/components/ui/button.tsx';
 import useGameState from '@/hooks/useGameState';
 import type { QuestionProps } from '@/components/questions/index.ts';
+import QuestionTitle from '@/components/questionTitle/QuestionTitle.tsx';
+import useAudio from '@/hooks/useAudio.ts';
 
 const hexToRgb = (hex: string) => {
   const bigint = parseInt(hex.replace('#', ''), 16);
@@ -35,9 +37,10 @@ const getScoreFromDifference = (diff: number): number => {
 };
 
 const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
-  const { onAnswerSubmit } = props;
+  const { onAnswerSubmit, difficulty } = props;
   const { gameState } = useGameState();
-  const [question, setQuestion] = useState(generateQuestion(5));
+  const { play } = useAudio();
+  const [question, _] = useState(generateQuestion(difficulty));
   const [selectedColor, setSelectedColor] = useState({
     h: 214,
     s: 43,
@@ -51,11 +54,11 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
     const d = colorDifference(question.answer, hsvaToHex(selectedColor));
     const s = getScoreFromDifference(d);
     setScore(s);
+    play(score || 0 > 0 ? 'correctAnswer' : 'wrongAnswer');
     setDiff(parseFloat(d.toFixed(2)));
   };
 
   const handleNextRound = () => {
-    setQuestion(generateQuestion(5));
     const currentGameState = { ...gameState };
     currentGameState.score += score || 0;
     currentGameState.answers.push({
@@ -70,9 +73,7 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
 
   return (
     <>
-      <h1 className="text-xl text-center font-bold mb-3">
-        Match the color as closely as possible
-      </h1>
+      <QuestionTitle title={'Match the color as closely as possible'} />
 
       <div className="flex gap-10 items-center">
         <div>
@@ -121,9 +122,9 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
         </Button>
       )}
 
-      {score !== null && (
+      {score !== null && diff !== null && (
         <div className="mt-4 text-center">
-          <p>Difference: {diff?.toFixed(2)}%</p>
+          <p>Match: {100 - diff.toFixed(2)}%</p>
           <p>Your score: {score} / 5</p>
         </div>
       )}

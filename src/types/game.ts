@@ -1,4 +1,4 @@
-type QuestionType = 'quiz' | 'match';
+type QuestionType = 'quiz' | 'match' | 'mathExpression';
 
 interface GameRound {
   questionType: QuestionType;

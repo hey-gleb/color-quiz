@@ -6,12 +6,12 @@ import { motion } from 'framer-motion';
 import type { QuestionProps } from '@/components/questions/index.ts';
 
 const QuizQuestion: React.FC<QuestionProps> = (props) => {
-  const { onAnswerSubmit } = props;
+  const { onAnswerSubmit, difficulty } = props;
   const { gameState } = useGameState();
   const { play } = useAudio();
 
   const [selected, setSelected] = useState<string | null>(null);
-  const [question, setQuestion] = useState(generateQuestion(gameState.round));
+  const [question, _] = useState(generateQuestion(difficulty));
 
   const showAnswer = useRef(false);
 
@@ -34,8 +34,6 @@ const QuizQuestion: React.FC<QuestionProps> = (props) => {
           isCorrect: hex === question.answer,
         });
         onAnswerSubmit(currentGameState);
-        setQuestion(generateQuestion(currentGameState.round));
-        setSelected(null);
         showAnswer.current = false;
       }, 1500);
     },

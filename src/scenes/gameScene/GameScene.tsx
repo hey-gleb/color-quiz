@@ -5,32 +5,10 @@ import { Card, CardContent } from '@/components/ui/card.tsx';
 import useGameState from '@/hooks/useGameState';
 import QuizQuestion from '@/components/questions/QuizQuestion.tsx';
 import ColorMatchQuestion from '@/components/questions/ColorMatchQuestion.tsx';
-import type { GameState } from '@/context/GameStateContext';
-import type { GameRound, QuestionType } from '@/types/game.ts';
+import { gamePlan, type GameState } from '@/context/GameStateContext';
+import type { QuestionType } from '@/types/game.ts';
 import type { QuestionProps } from '@/components/questions';
-
-const gamePlan: GameRound[] = [
-  {
-    questionType: 'quiz',
-    difficulty: 1,
-  },
-  {
-    questionType: 'quiz',
-    difficulty: 2,
-  },
-  {
-    questionType: 'quiz',
-    difficulty: 3,
-  },
-  {
-    questionType: 'quiz',
-    difficulty: 4,
-  },
-  {
-    questionType: 'match',
-    difficulty: 5,
-  },
-];
+import MathExpressionQuestion from '@/components/questions/MathExpressionQuestion.tsx';
 
 const questionTypeToComponentMap: Record<
   QuestionType,
@@ -38,6 +16,7 @@ const questionTypeToComponentMap: Record<
 > = {
   quiz: QuizQuestion,
   match: ColorMatchQuestion,
+  mathExpression: MathExpressionQuestion,
 };
 
 const GameScene: React.FC = () => {
@@ -68,7 +47,10 @@ const GameScene: React.FC = () => {
           transition={{ duration: 0.4 }}
         >
           <CardContent className="p-6 flex flex-col items-center text-white gap-4">
-            <QuestionComponent onAnswerSubmit={handleAnswerSubmit} />
+            <QuestionComponent
+              onAnswerSubmit={handleAnswerSubmit}
+              difficulty={gameRound.difficulty}
+            />
           </CardContent>
         </motion.div>
       </Card>

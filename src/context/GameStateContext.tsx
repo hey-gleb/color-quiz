@@ -1,5 +1,5 @@
 import React, { createContext, type ReactNode, useState } from 'react';
-import { TOTAL_ROUNDS } from '@/const.ts';
+import type { GameRound } from '@/types/game.ts';
 
 type Answer = {
   questionColor: string;
@@ -23,8 +23,35 @@ export type GameStateContextType = {
   resetGame: () => void;
 };
 
+export const gamePlan: GameRound[] = [
+  {
+    questionType: 'quiz',
+    difficulty: 1,
+  },
+  {
+    questionType: 'quiz',
+    difficulty: 2,
+  },
+  {
+    questionType: 'quiz',
+    difficulty: 3,
+  },
+  {
+    questionType: 'quiz',
+    difficulty: 4,
+  },
+  {
+    questionType: 'mathExpression',
+    difficulty: 1,
+  },
+  {
+    questionType: 'match',
+    difficulty: 5,
+  },
+];
+
 const defaultState: GameState = {
-  totalRounds: TOTAL_ROUNDS,
+  totalRounds: gamePlan.length,
   round: 1,
   score: 0,
   scene: 'menu',

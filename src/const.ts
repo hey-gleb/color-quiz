@@ -1,4 +1,3 @@
 const SOUND_ASSETS_FILE_PATH_BASE = '/assets/sounds';
-const TOTAL_ROUNDS = 5;
 
-export { SOUND_ASSETS_FILE_PATH_BASE, TOTAL_ROUNDS };
+export { SOUND_ASSETS_FILE_PATH_BASE };
