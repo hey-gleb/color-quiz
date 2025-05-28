@@ -8,7 +8,13 @@ const MenuScene: React.FC = () => {
   const { gameState, resetGame } = useGameState();
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white flex flex-col items-center justify-center p-6 text-center">
+    <div
+      className="min-h-screen bg-zinc-900 text-white flex flex-col items-center justify-center p-6 text-center"
+      style={{
+        backgroundImage: 'radial-gradient(#26262d 2px, #18181b 2px)',
+        backgroundSize: '40px 40px',
+      }}
+    >
       <h1 className="text-5xl font-bold mb-4">Color Quiz</h1>
       <p className="text-zinc-400 mb-6 max-w-md">
         Guess colors HEX-codes correctly. Just {gameState.totalRounds} rounds to

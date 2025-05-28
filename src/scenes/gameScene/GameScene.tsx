@@ -34,7 +34,13 @@ const GameScene: React.FC = () => {
   const gameRound = gamePlan[gameState.round - 1];
   const QuestionComponent = questionTypeToComponentMap[gameRound.questionType];
   return (
-    <div className="min-h-screen bg-zinc-900 text-white flex items-center justify-center p-6">
+    <div
+      className="min-h-screen bg-zinc-900 text-white flex items-center justify-center p-6"
+      style={{
+        backgroundImage: 'radial-gradient(#26262d 2px, #18181b 2px)',
+        backgroundSize: '40px 40px',
+      }}
+    >
       <div className="absolute top-4 right-6 text-white text-lg font-semibold">
         Round: {gameState.round}/{gameState.totalRounds}
       </div>

@@ -27,7 +27,13 @@ const GameOverScene: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white flex flex-col items-center justify-center p-6 text-center">
+    <div
+      className="min-h-screen bg-zinc-900 text-white flex flex-col items-center justify-center p-6 text-center"
+      style={{
+        backgroundImage: 'radial-gradient(#26262d 2px, #18181b 2px)',
+        backgroundSize: '40px 40px',
+      }}
+    >
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
