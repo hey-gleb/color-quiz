@@ -2,6 +2,7 @@ import React from 'react';
 
 import useGameState from '@/hooks/useGameState';
 import { Button } from '@/components/ui/button.tsx';
+import ChangelogModal from '@/components/changelogModal/ChangelogModal.tsx';
 
 const MenuScene: React.FC = () => {
   const { gameState, resetGame } = useGameState();
@@ -13,9 +14,12 @@ const MenuScene: React.FC = () => {
         Guess colors HEX-codes correctly. Just {gameState.totalRounds} rounds to
         show what you can.
       </p>
-      <Button onClick={resetGame} size={'lg'} variant={'secondary'}>
-        Start game
-      </Button>
+      <div className="flex flex-col gap-4 items-center justify-center">
+        <Button onClick={resetGame} size={'lg'} variant={'secondary'}>
+          Start game
+        </Button>
+        <ChangelogModal />
+      </div>
     </div>
   );
 };

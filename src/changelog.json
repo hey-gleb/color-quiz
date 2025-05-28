@@ -1,0 +1,12 @@
+[
+  {
+    "version": "0.2",
+    "changes": [
+      "Matching color question",
+      "Mixing colors question",
+      "Reworked Game Over scene",
+      "Added \"What's new\" button to Menu scene to show latest changes",
+      "Mute/Unmute sound button"
+    ]
+  }
+]
