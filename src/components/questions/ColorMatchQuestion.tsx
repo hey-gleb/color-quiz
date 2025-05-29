@@ -81,6 +81,7 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
   };
   const wheelSize = 200;
 
+  // @ts-ignore
   function colorToCoord(hex: string, fixedL: number): { x: number; y: number } {
     const rgb = hexToRgb(hex);
     const [h, s, l] = rgbToHsl(rgb.r, rgb.g, rgb.b);

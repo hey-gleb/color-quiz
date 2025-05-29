@@ -184,6 +184,7 @@ const DraggableColor = ({
 
   return (
     <div
+      // @ts-ignore
       ref={drag}
       style={{
         opacity: isDragging ? 0.5 : 1,
@@ -241,6 +242,7 @@ const DropSlot = ({
 
   return (
     <div
+      // @ts-ignore
       ref={drop}
       className={'w-15 h-15 rounded-md border border-gray-300'}
       style={{
