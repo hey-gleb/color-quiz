@@ -1,11 +1,15 @@
 import React, { createContext, type ReactNode, useState } from 'react';
 import type { GameRound } from '@/types/game.ts';
 
+interface SelectedColor {
+  color: string;
+  result: 'correct' | 'wrong' | 'partial';
+}
+
 type Answer = {
   questionColor: string;
-  selected: string;
+  selected: SelectedColor[];
   correct: string;
-  isCorrect: boolean;
 };
 
 export type GameState = {

@@ -3,7 +3,7 @@ const getRandomHexChar = () => {
   return letters[Math.floor(Math.random() * 16)];
 };
 
-const getRandomColor = (): string => {
+export const getRandomColor = (): string => {
   return '#' + Array.from({ length: 6 }, () => getRandomHexChar()).join('');
 };
 
@@ -14,6 +14,23 @@ const getUniqueRandomHexChar = (currentChars: string[] = []) => {
     hexChar = getRandomHexChar();
   }
   return getRandomHexChar();
+};
+
+export const mixColors = (c1: string, c2: string) => {
+  const toRGB = (hex: string) =>
+    hex.match(/\w\w/g)?.map((x) => parseInt(x, 16)) ?? [0, 0, 0];
+
+  const avg = (a: number, b: number) => Math.round((a + b) / 2);
+
+  const [r1, g1, b1] = toRGB(c1);
+  const [r2, g2, b2] = toRGB(c2);
+
+  return (
+    '#' +
+    [avg(r1, r2), avg(g1, g2), avg(b1, b2)]
+      .map((x) => x.toString(16).padStart(2, '0'))
+      .join('')
+  );
 };
 
 export const generateQuestion = (

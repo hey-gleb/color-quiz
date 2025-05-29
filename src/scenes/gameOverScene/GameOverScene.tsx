@@ -26,6 +26,14 @@ const GameOverScene: React.FC = () => {
     resetGame();
   };
 
+  const getStylesByResult = (result: 'correct' | 'wrong' | 'partial') => {
+    return {
+      correct: 'bg-green-500 text-black',
+      wrong: 'bg-red-500 text-black',
+      partial: 'bg-yellow-500 text-black',
+    }[result];
+  };
+
   return (
     <div
       className="min-h-screen bg-zinc-900 text-white flex flex-col items-center justify-center p-6 text-center"
@@ -56,15 +64,21 @@ const GameOverScene: React.FC = () => {
                 <span>#{i + 1}</span>
               </div>
               <div className="flex gap-2 items-center">
-                <span
-                  className={`px-2 py-0.5 rounded font-mono ${a.isCorrect ? 'bg-green-500 text-black' : 'bg-red-500 text-black'}`}
-                >
-                  {a.selected}
-                </span>
-                {!a.isCorrect && (
+                {a.selected.map((selectedColor, i) => (
+                  <span
+                    key={i}
+                    className={`px-2 py-0.5 rounded font-mono ${getStylesByResult(selectedColor.result)}`}
+                  >
+                    {selectedColor.color}
+                  </span>
+                ))}
+                {!(a.selected[0].result === 'correct') && (
                   <span className="text-xs text-zinc-400">→ {a.correct}</span>
                 )}
-                {a.isCorrect ? '✅' : '❌'}
+                {a.selected[0].result === 'correct' ||
+                a.selected[0].result === 'partial'
+                  ? '✅'
+                  : '❌'}
               </div>
             </div>
           ))}
@@ -72,7 +86,7 @@ const GameOverScene: React.FC = () => {
 
         <div className="mt-6 flex justify-center gap-4">
           <Button variant={'secondary'} size={'lg'} onClick={handleRestart}>
-            🔁 Try again
+            Try again
           </Button>
         </div>
       </motion.div>
