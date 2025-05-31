@@ -113,7 +113,7 @@ const MathExpressionQuestion: React.FC<QuestionProps> = (props) => {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="flex flex-col gap-6 items-center">
-        <QuestionTitle>Mix colors to get the target one</QuestionTitle>
+        <QuestionTitle>Drag & Drop colors to solve puzzle</QuestionTitle>
 
         <div className="flex items-center space-x-4">
           <DropSlot

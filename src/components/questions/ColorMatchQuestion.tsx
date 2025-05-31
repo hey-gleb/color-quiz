@@ -89,7 +89,6 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
     const angle = (h / 360) * 2 * Math.PI;
     console.log(l, fixedL);
 
-    // Вместо только насыщенности учитываем и яркость
     const radius = s * l * (wheelSize / 2 - 10);
 
     const x = wheelSize / 2 - radius * Math.cos(angle);
@@ -193,7 +192,8 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
           size={'lg'}
           className={'mt-5'}
         >
-          Next round
+          {/*TODO temporary solution. Has to be set the content dynamically*/}
+          Finish the game
         </Button>
       ) : (
         <Button
@@ -211,8 +211,7 @@ const ColorMatchQuestion: React.FC<QuestionProps> = (props) => {
 
 export default ColorMatchQuestion;
 
-// Вспомогательные функции:
-function hexToRgb(hex: string) {
+const hexToRgb = (hex: string) => {
   const parsed = hex.replace(/^#/, '');
   const bigint = parseInt(parsed, 16);
   return {
@@ -220,9 +219,13 @@ function hexToRgb(hex: string) {
     g: (bigint >> 8) & 255,
     b: bigint & 255,
   };
-}
+};
 
-function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
+const rgbToHsl = (
+  r: number,
+  g: number,
+  b: number
+): [number, number, number] => {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -242,4 +245,4 @@ function rgbToHsl(r: number, g: number, b: number): [number, number, number] {
     h *= 60;
   }
   return [h, s, l];
-}
+};
