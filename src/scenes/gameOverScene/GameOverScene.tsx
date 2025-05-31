@@ -72,9 +72,11 @@ const GameOverScene: React.FC = () => {
                     {selectedColor.color}
                   </span>
                 ))}
-                {!(a.selected[0].result === 'correct') && (
-                  <span className="text-xs text-zinc-400">→ {a.correct}</span>
-                )}
+                {!(a.selected[0].result === 'correct') &&
+                  // TODO temporary solution
+                  a.selected.length === 1 && (
+                    <span className="text-xs text-zinc-400">→ {a.correct}</span>
+                  )}
                 {a.selected[0].result === 'correct' ||
                 a.selected[0].result === 'partial'
                   ? '✅'

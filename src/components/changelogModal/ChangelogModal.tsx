@@ -31,7 +31,7 @@ const ChangelogModal = () => {
             What's New — v{currentVersionChanges.version}
           </DialogTitle>
           <DialogDescription>
-            Here's a small summary of cool things we've added to make the game .
+            Here's a small summary of cool things we've added to make the game
             even better.
           </DialogDescription>
         </DialogHeader>
