@@ -5,10 +5,11 @@ import { Card, CardContent } from '@/components/ui/card.tsx';
 import useGameState from '@/hooks/useGameState';
 import QuizQuestion from '@/components/questions/QuizQuestion.tsx';
 import ColorMatchQuestion from '@/components/questions/ColorMatchQuestion.tsx';
+import MathExpressionQuestion from '@/components/questions/MathExpressionQuestion.tsx';
+import SortBySaturationQuestion from '@/components/questions/SortBySaturationQuestion.tsx';
 import { gamePlan, type GameState } from '@/context/GameStateContext';
 import type { QuestionType } from '@/types/game.ts';
 import type { QuestionProps } from '@/components/questions';
-import MathExpressionQuestion from '@/components/questions/MathExpressionQuestion.tsx';
 
 const questionTypeToComponentMap: Record<
   QuestionType,
@@ -17,6 +18,7 @@ const questionTypeToComponentMap: Record<
   quiz: QuizQuestion,
   match: ColorMatchQuestion,
   mathExpression: MathExpressionQuestion,
+  sortBySaturation: SortBySaturationQuestion,
 };
 
 const GameScene: React.FC = () => {

@@ -1,4 +1,4 @@
-type QuestionType = 'quiz' | 'match' | 'mathExpression';
+type QuestionType = 'quiz' | 'match' | 'mathExpression' | 'sortBySaturation';
 
 interface GameRound {
   questionType: QuestionType;

@@ -28,30 +28,34 @@ export type GameStateContextType = {
 };
 
 export const gamePlan: GameRound[] = [
+  // {
+  //   questionType: 'quiz',
+  //   difficulty: 1,
+  // },
+  // {
+  //   questionType: 'quiz',
+  //   difficulty: 2,
+  // },
+  // {
+  //   questionType: 'quiz',
+  //   difficulty: 3,
+  // },
+  // {
+  //   questionType: 'quiz',
+  //   difficulty: 4,
+  // },
   {
-    questionType: 'quiz',
+    questionType: 'sortBySaturation',
     difficulty: 1,
   },
-  {
-    questionType: 'quiz',
-    difficulty: 2,
-  },
-  {
-    questionType: 'quiz',
-    difficulty: 3,
-  },
-  {
-    questionType: 'quiz',
-    difficulty: 4,
-  },
-  {
-    questionType: 'mathExpression',
-    difficulty: 1,
-  },
-  {
-    questionType: 'match',
-    difficulty: 5,
-  },
+  // {
+  //   questionType: 'mathExpression',
+  //   difficulty: 1,
+  // },
+  // {
+  //   questionType: 'match',
+  //   difficulty: 5,
+  // },
 ];
 
 const defaultState: GameState = {
